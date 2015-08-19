@@ -5,8 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScavengerHunt"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="720" Width="1280">
+    <Window.Resources>
+        <Style x:Key="GoogleGreyButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FF2196F3"/>
+            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Roboto"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,7"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="2" Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+               
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+                        
+                        <Border Name="border" 
+                    Padding="{TemplateBinding Padding}" 
+                    CornerRadius="3" 
+                    Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <!--TODO: Set the right colors-->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!--<Setter TargetName="border" Property="BorderBrush" Value="#FFC6C6C4" />-->
+                                <Setter Property="Background" Value="#FF1E88E5" />
+                                
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Direction="270" BlurRadius="15" ShadowDepth="7" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <!--Some setters here--> 
+
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate TargetType="Button" x:Key="circleButton">
+            <Ellipse Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" Fill="{TemplateBinding Background}"></Ellipse>
+        </ControlTemplate>
+    </Window.Resources>
+    
+    <Canvas x:Name="LayoutRoot" Margin="0,0,-218,-278">
+        <Button x:Name="openButton" Content="Button" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="46" Click="addRow" Canvas.Left="4" Canvas.Top="4" RenderTransformOrigin="0.217,0.326" Template="{StaticResource circleButton}" Background="#FF1E88E5" BorderBrush="#FF1E1E1E">
+            <Button.Effect>
+                <DropShadowEffect Direction="270" ShadowDepth="2" Opacity="0.5"/>
+            </Button.Effect>
+
+
+        </Button>
+
+    </Canvas>
+
 </Window>
+    
