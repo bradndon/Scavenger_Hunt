@@ -4,6 +4,20 @@
              xmlns:local="clr-namespace:ScavengerHunt"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+         <SolidColorBrush x:Key="Color50"/>
+        <SolidColorBrush x:Key="Color100"/>
+        <SolidColorBrush x:Key="Color200"/>
+        <SolidColorBrush x:Key="Color300"/>
+        <SolidColorBrush x:Key="Color400"/>
+        <SolidColorBrush x:Key="Color500"/>
+        <SolidColorBrush x:Key="Color600"/>
+        <SolidColorBrush x:Key="Color700"/>
+        <SolidColorBrush x:Key="Color800"/>
+        <SolidColorBrush x:Key="Color900"/>
+        <SolidColorBrush x:Key="ColorA100"/>
+        <SolidColorBrush x:Key="ColorA200"/>
+        <SolidColorBrush x:Key="ColorA400"/>
+        <SolidColorBrush x:Key="ColorA700"/>
+        
     </Application.Resources>
 </Application>

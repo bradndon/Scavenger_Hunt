@@ -24,8 +24,29 @@ namespace ScavengerHunt
         public MainWindow()
         {
             InitializeComponent();
+            Application.Current.Resources["Color400"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF7043"));
+
+            Application.Current.Resources["Color500"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF5722"));
+            Application.Current.Resources["Color600"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F4511E"));
+            Application.Current.Resources["Color700"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E64A19"));
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            double dWidth = -1;
+            double dHeight = -1;
+            FrameworkElement pnlClient = this.Content as FrameworkElement;
+            if (pnlClient != null)
+            {
+                dWidth = pnlClient.ActualWidth + 10;
+                dHeight = pnlClient.ActualHeight;
+                appBar1.Width = dWidth;
+                appBar2.Width = dWidth;
+                scroller.Height = dHeight - 95;
+            }
+        }
+
+   
         private void openFile(object sender, RoutedEventArgs e)
         {
             
@@ -48,7 +69,13 @@ namespace ScavengerHunt
         private void addRow(object sender, RoutedEventArgs e)
         {
             //increase number of rows
-            num++;
+            //num++;
+
+            var newCanvas = new Canvas();
+            newCanvas.Width = 1280;
+            newCanvas.Height = 50;
+            stack.Children.Add(newCanvas);
+
 
             //create button dynamically
             var newBtn = new Button();
@@ -62,13 +89,13 @@ namespace ScavengerHunt
             newBtn.Style = (Style)this.Resources["GoogleGreyButton"];
 
             //Location on Screen
-            Canvas.SetTop(newBtn, 50d * (num - 1));
+            Canvas.SetTop(newBtn, 0);
             Canvas.SetLeft(newBtn, 370d);
 
             newBtn.Click += openFile;
 
             //Add to Screen
-            LayoutRoot.Children.Add(newBtn);
+            newCanvas.Children.Add(newBtn);
 
             //create Label dynamically
             var dynamicLabel = new Label();
@@ -82,11 +109,26 @@ namespace ScavengerHunt
             dynamicLabel.Foreground = new SolidColorBrush(Colors.Black);
 
             //Location on Screen
-            Canvas.SetTop(dynamicLabel, 50d * (num - 1));
+            Canvas.SetTop(dynamicLabel, 0);
             Canvas.SetLeft(dynamicLabel, 250d);
 
             //Add to Screen
-            LayoutRoot.Children.Add(dynamicLabel);
+            newCanvas.Children.Add(dynamicLabel);
+        }
+
+        private void Size_Changed(object sender, SizeChangedEventArgs e)
+        {
+            double dWidth = -1;
+            double dHeight = -1;
+            FrameworkElement pnlClient = this.Content as FrameworkElement;
+            if (pnlClient != null)
+            {
+                dWidth = pnlClient.ActualWidth + 10;
+                dHeight = pnlClient.ActualHeight;
+                appBar1.Width = dWidth;
+                appBar2.Width = dWidth;
+                scroller.Height = dHeight - 95;
+            }
         }
     }
 }
