@@ -73,7 +73,7 @@ namespace ScavengerHunt
 
             var newCanvas = new Canvas();
             newCanvas.Width = 1280;
-            newCanvas.Height = 50;
+            newCanvas.Height = 64;
             stack.Children.Add(newCanvas);
 
 

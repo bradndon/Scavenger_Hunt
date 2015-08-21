@@ -86,7 +86,11 @@
             </StackPanel>
         </ScrollViewer>
         <Rectangle x:Name="appBar1" Height="25" Fill="{DynamicResource Color700}" Canvas.Top="0" Margin="0,0,0,0" Panel.ZIndex="-3"/>
-        <Rectangle x:Name="appBar2" Height="70" Fill="{DynamicResource Color400}" Width="1270" Canvas.Top="20"/>
+        <Rectangle x:Name="appBar2" Height="64" Fill="{DynamicResource Color400}" Width="1270" Canvas.Top="15">
+            <Rectangle.Effect>
+            <DropShadowEffect Direction="270" ShadowDepth="2" Opacity="0.5"/>
+            </Rectangle.Effect>
+        </Rectangle>
     </Canvas>
 
 </Window>
