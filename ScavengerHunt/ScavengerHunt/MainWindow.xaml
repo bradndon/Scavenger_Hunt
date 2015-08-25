@@ -9,6 +9,33 @@
         Loaded="Window_Loaded" SizeChanged="Size_Changed">
 
     <Window.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="BorderBrush" Value="LightGray"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!-- Modify default template, to change triggers -->
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border x:Name="border" BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <!--<Trigger Property=""-->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="BorderThickness" Value="0 0 0 3"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Color500}"/>
+                            </Trigger>
+                            
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Color500}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="0 0 0 2"/>
+                            </Trigger>
+                            
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="MaterialAccentButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="{DynamicResource Color500}"/>
             <Setter Property="Foreground" Value="#FFFFFFFF"/>
@@ -78,10 +105,61 @@
 
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Height="645" Canvas.Top="78" Width="320" Background="#FF272424">
+        <StackPanel x:Name="menu" Height="645" Canvas.Top="78" Width="320" Background="#FF272424">
             <StackPanel.Effect>
                 <DropShadowEffect Direction="0" ShadowDepth="2" Opacity="0.5"/>
             </StackPanel.Effect>
+            <Button x:Name="makeButton" Content="Button" Click="makeButton_Click"/>
+            <TextBox x:Name="textBox" Height="23" TextWrapping="Wrap">
+                <!--<TextBox.Style>
+                    <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                        
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                                    <Border x:Name="border" BorderThickness="0 0 0 3" BorderBrush="{TemplateBinding BorderBrush}"></Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                                        </Trigger>
+                                        --><!-- Original triggers -->
+                                        <!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
+                        </Trigger>-->
+                                        <!-- MY trigger --><!--
+                                        <Trigger Property="IsFocused" Value="True">
+                                            <Setter Property="BorderBrush" Value="Green"/>
+                                            <Setter Property="BorderThickness" Value="2"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                            <Style.Resources>
+                                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label Content="Question 1 image path" Foreground="LightGray" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            --><!--<Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>--><!--
+                        </Style>
+                    </TextBox.Style>-->
+                
+            </TextBox> 
         </StackPanel>
 
         <Rectangle x:Name="appBar1" Height="25" Fill="{DynamicResource Color700}" Canvas.Top="0" Margin="0,0,0,0" Panel.ZIndex="-3"/>
