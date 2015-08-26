@@ -39,7 +39,7 @@ namespace ScavengerHunt
             //open document
             doc.Open();
             var cb = writer.DirectContent;
-
+            StringBuilder order = new StringBuilder();
             //main loop, creates pages and follows the template for the layout
             for (int i = 0; i < answers.Length; i++)
             {
@@ -70,7 +70,19 @@ namespace ScavengerHunt
                 queImg.ScaleToFit(720f, 302f);
                 queImg.SetAbsolutePosition(36f, 36f + 151f - queImg.ScaledHeight / 2);
                 doc.Add(queImg);
+                order.Append(alpha[i] + " -> ");
+                
+                
             }
+            order.Append(alpha[0]);
+            doc.NewPage();
+            string o = order.ToString();
+            var orders = new Paragraph(o);
+            
+            orders.Font.Size = 36f;
+            doc.Add(new Paragraph());
+            doc.Add(orders);
+            
 
             //closethe document
             doc.Close();
