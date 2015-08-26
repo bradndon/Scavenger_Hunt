@@ -25,7 +25,7 @@ namespace ScavengerHunt
     {
         List<string> imgList;
         List<Button> btnList;
-        List<Label> lblList;
+        List<TextBox> lblList;
         int num = 0;
         public MainWindow()
         {
@@ -42,7 +42,7 @@ namespace ScavengerHunt
             changeSize();
             btnList = new List<Button>();
             imgList = new List<string>();
-            lblList = new List<Label>();
+            lblList = new List<TextBox>();
         }
 
    
@@ -62,7 +62,8 @@ namespace ScavengerHunt
             {
                 string filename = dlg.FileName;
                 imgList[btnList.IndexOf((Button)sender)] = filename;
-                lblList[btnList.IndexOf((Button)sender)].Content = filename;
+                lblList[btnList.IndexOf((Button)sender)].Text = filename;
+                lblList[btnList.IndexOf((Button)sender)].Focus();
             }
 
 
@@ -96,7 +97,7 @@ namespace ScavengerHunt
 
             //Location on Screen
             Canvas.SetTop(newBtn1, 18d);
-            Canvas.SetLeft(newBtn1, 172d);
+            Canvas.SetLeft(newBtn1, 202d);
 
             newBtn1.Click += openFile;
 
@@ -117,7 +118,7 @@ namespace ScavengerHunt
 
             //Location on Screen
             Canvas.SetTop(newBtn, 18d);
-            Canvas.SetLeft(newBtn, 444d);
+            Canvas.SetLeft(newBtn, 504d);
 
             newBtn.Click += openFile;
 
@@ -125,51 +126,126 @@ namespace ScavengerHunt
             newCanvas.Children.Add(newBtn);
             btnList.Add(newBtn);
 
-
             //create Label dynamically
-            var dynamicLabel = new Label();
-
-            //Text on Label
-            dynamicLabel.Content = "Question " + num + " Image Path:";
+            var dynamicText = new TextBox();
 
             //Properties of label
-            dynamicLabel.Width = 140;
-            dynamicLabel.Height = 36;
-            dynamicLabel.Foreground = new SolidColorBrush(Colors.Black);
+            dynamicText.Width = 170;
+            dynamicText.Height = 32;
+            dynamicText.FontSize = 16;
+            dynamicText.Foreground = new SolidColorBrush(Colors.Black);
+            dynamicText.TextChanged += textChanged;
 
             //Location on Screen
-            Canvas.SetTop(dynamicLabel, 20d);
-            Canvas.SetLeft(dynamicLabel, 16d);
+            Canvas.SetTop(dynamicText, 18d);
+            Canvas.SetLeft(dynamicText, 16d);
 
             //Add to Screen
-            newCanvas.Children.Add(dynamicLabel);
-            lblList.Add(dynamicLabel);
+            newCanvas.Children.Add(dynamicText);
+           
+            lblList.Add(dynamicText);
 
             //create Label dynamically
-            var dynamicLabel2 = new Label();
+            var dynamicText2 = new TextBox();
 
             //Text on Label
-            dynamicLabel2.Content = "Answer " + num + " Image Path:";
-
-            //Properties of label
-            dynamicLabel2.Width = 140;
-            dynamicLabel2.Height = 36;
-            dynamicLabel2.Foreground = new SolidColorBrush(Colors.Black);
-
-            //Location on Screen
-            Canvas.SetTop(dynamicLabel2, 20d);
-            Canvas.SetLeft(dynamicLabel2, 288d);
-
-            //Add to Screen
-            newCanvas.Children.Add(dynamicLabel2);
-            lblList.Add(dynamicLabel2);
             
+
+            //Properties of label
+            dynamicText2.Width = 170;
+            dynamicText2.Height = 32;
+            dynamicText2.FontSize = 16;
+            dynamicText2.Foreground = new SolidColorBrush(Colors.Black);
+            dynamicText2.TextChanged += textChanged;
+
+            //Location on Screen
+            Canvas.SetTop(dynamicText2, 18d);
+            Canvas.SetLeft(dynamicText2, 318d);
+
+            //Add to Screen
+            newCanvas.Children.Add(dynamicText2);
+            lblList.Add(dynamicText2);
+
+            //Create Watermarks for textBoxes
+
+            //create TextBlock Dynamically
+            var dynamicBlock = new TextBlock();
+
+            //Properties of TextBlock
+            dynamicBlock.Text = "Answer " + num + " Image Path";
+            dynamicBlock.Width = 170;
+            dynamicBlock.Height = 32;
+            dynamicBlock.FontSize = 16;
+            dynamicBlock.Foreground = new SolidColorBrush(Colors.DarkGray);
+            dynamicBlock.IsHitTestVisible = false;
+
+            //Create Watermark Style
+            Style style = new Style(typeof(TextBlock));
+            style.Setters.Add(new Setter(TextBlock.VisibilityProperty, Visibility.Collapsed));
+
+            //The trigger to make it visible
+            var trigger = new DataTrigger();
+            trigger.Binding = new Binding("Text") { Source = dynamicText2 };
+            trigger.Value = "";
+            trigger.Setters.Add(new Setter(TextBlock.VisibilityProperty, Visibility.Visible));
+            style.Triggers.Add(trigger);
+
+            //Set the style
+            dynamicBlock.Style = style;
+
+            //Location on Screen (Same as dynamicText2)
+            Canvas.SetTop(dynamicBlock, 18d);
+            Canvas.SetLeft(dynamicBlock, 318d);
+
+            //Add to screen
+            newCanvas.Children.Add(dynamicBlock);
+
+            //create TextBlock Dynamically
+            var dynamicBlock2 = new TextBlock();
+
+            //Properties of TextBlock
+            dynamicBlock2.Text = "Question " + num + " Image Path";
+            dynamicBlock2.Width = 170;
+            dynamicBlock2.Height = 32;
+            dynamicBlock2.FontSize = 16;
+            dynamicBlock2.Foreground = new SolidColorBrush(Colors.DarkGray);
+            dynamicBlock2.IsHitTestVisible = false;
+
+            //Create Watermark Style
+            Style style2 = new Style(typeof(TextBlock));
+            style2.Setters.Add(new Setter(TextBlock.VisibilityProperty, Visibility.Collapsed));
+
+            //The trigger to make it visible
+            var trigger2 = new DataTrigger();
+            trigger2.Binding = new Binding("Text") { Source = dynamicText };
+            trigger2.Value = "";
+            trigger2.Setters.Add(new Setter(TextBlock.VisibilityProperty, Visibility.Visible));
+            style2.Triggers.Add(trigger2);
+
+            //Set the style
+            dynamicBlock2.Style = style2;
+
+            //Location on Screen (Same as dynamicText)
+            Canvas.SetTop(dynamicBlock2, 18d);
+            Canvas.SetLeft(dynamicBlock2, 16d);
+
+            //Add to Screen
+            newCanvas.Children.Add(dynamicBlock2);
+
+
         }
 
         private void Size_Changed(object sender, SizeChangedEventArgs e)
         {
             changeSize();
             
+        }
+
+        private void textChanged(object sender, TextChangedEventArgs e)
+        {
+            var t = (TextBox)sender;
+            imgList[lblList.IndexOf(t)] = t.Text;
+
         }
 
         private void changeSize()
