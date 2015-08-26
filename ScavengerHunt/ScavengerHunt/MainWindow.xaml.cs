@@ -35,6 +35,9 @@ namespace ScavengerHunt
             Application.Current.Resources["Color500"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF5722"));
             Application.Current.Resources["Color600"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F4511E"));
             Application.Current.Resources["Color700"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E64A19"));
+            Application.Current.Resources["ColorA500"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2196F3"));
+            Application.Current.Resources["ColorA600"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1E88E5"));
+            Application.Current.Resources["ColorA700"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1976D2"));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -263,8 +266,8 @@ namespace ScavengerHunt
                 appBar2.Width = dWidth;
                 scroller.Height = dHeight - 79;
                 menu.Height = dHeight - 79;
-                Canvas.SetTop(openButton, dHeight - 54);
-                Canvas.SetLeft(openButton, dWidth - 64);
+                Canvas.SetTop(openButton, dHeight - 54 - 24);
+                Canvas.SetLeft(openButton, dWidth - 64 - 24);
             }
         }
 

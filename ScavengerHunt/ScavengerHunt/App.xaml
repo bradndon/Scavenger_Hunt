@@ -17,6 +17,8 @@
         <SolidColorBrush x:Key="ColorA100"/>
         <SolidColorBrush x:Key="ColorA200"/>
         <SolidColorBrush x:Key="ColorA400"/>
+        <SolidColorBrush x:Key="ColorA500"/>
+        <SolidColorBrush x:Key="ColorA600"/>
         <SolidColorBrush x:Key="ColorA700"/>
         
     </Application.Resources>
