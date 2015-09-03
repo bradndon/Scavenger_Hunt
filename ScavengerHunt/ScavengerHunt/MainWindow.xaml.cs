@@ -25,6 +25,7 @@ namespace ScavengerHunt
     {
         List<string> imgList;
         List<Button> btnList;
+        List<Button> delList;
         List<TextBox> lblList;
         List<Label> invalList;
         int num = 0;
@@ -54,6 +55,7 @@ namespace ScavengerHunt
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             btnList = new List<Button>();
+            delList = new List<Button>();
             imgList = new List<string>();
             lblList = new List<TextBox>();
             invalList = new List<Label>();
@@ -120,7 +122,7 @@ namespace ScavengerHunt
 
             var invalidLabel = new Label();
 
-            invalidLabel.Width = 330;
+            invalidLabel.Width = 312;
             invalidLabel.Height = 24;
             invalidLabel.FontSize = 12;
             invalidLabel.Content = "Invalid Path";
@@ -129,12 +131,12 @@ namespace ScavengerHunt
             invalidLabel.Opacity = 0;
 
             Canvas.SetTop(invalidLabel, 2d);
-            Canvas.SetLeft(invalidLabel, 12d);
+            Canvas.SetLeft(invalidLabel, 48d);
             newCanvas.Children.Add(invalidLabel);
 
             var invalidLabel2 = new Label();
 
-            invalidLabel2.Width = 330;
+            invalidLabel2.Width = 312;
             invalidLabel2.Height = 24;
             invalidLabel2.FontSize = 12;
             invalidLabel2.Content = "Invalid Path";
@@ -143,7 +145,7 @@ namespace ScavengerHunt
             invalidLabel2.Opacity = 0;
 
             Canvas.SetTop(invalidLabel2, 2d);
-            Canvas.SetLeft(invalidLabel2, 474d);
+            Canvas.SetLeft(invalidLabel2, 492d);
             newCanvas.Children.Add(invalidLabel2);
 
             invalList.Add(invalidLabel);
@@ -153,7 +155,7 @@ namespace ScavengerHunt
             var dynamicText = new TextBox();
 
             //Properties of label
-            dynamicText.Width = 330;
+            dynamicText.Width = 312;
             dynamicText.Height = 32;
             dynamicText.FontSize = 16;
             dynamicText.Foreground = new SolidColorBrush(Colors.Black);
@@ -161,7 +163,7 @@ namespace ScavengerHunt
 
             //Location on Screen
             Canvas.SetTop(dynamicText, 22d);
-            Canvas.SetLeft(dynamicText, 16d);
+            Canvas.SetLeft(dynamicText, 52d);
 
             //Add to Screen
             newCanvas.Children.Add(dynamicText);
@@ -172,7 +174,7 @@ namespace ScavengerHunt
 
             //Properties of TextBlock
             dynamicBlock2.Text = "Question " + num + " Image Path";
-            dynamicBlock2.Width = 330;
+            dynamicBlock2.Width = 312;
             dynamicBlock2.Height = 32;
             dynamicBlock2.FontSize = 16;
             dynamicBlock2.Foreground = new SolidColorBrush(Colors.DarkGray);
@@ -194,7 +196,7 @@ namespace ScavengerHunt
 
             //Location on Screen (Same as dynamicText)
             Canvas.SetTop(dynamicBlock2, 22d);
-            Canvas.SetLeft(dynamicBlock2, 16d);
+            Canvas.SetLeft(dynamicBlock2, 52d);
 
             //Add to Screen
             newCanvas.Children.Add(dynamicBlock2);
@@ -215,7 +217,7 @@ namespace ScavengerHunt
 
             //Location on Screen
             Canvas.SetTop(newBtn1, 22d);
-            Canvas.SetLeft(newBtn1, 362d);
+            Canvas.SetLeft(newBtn1, 380d);
 
             newBtn1.Click += openFile;
 
@@ -227,7 +229,7 @@ namespace ScavengerHunt
             var dynamicText2 = new TextBox();
 
             //Properties of label
-            dynamicText2.Width = 330;
+            dynamicText2.Width = 312;
             dynamicText2.Height = 32;
             dynamicText2.FontSize = 16;
             dynamicText2.Foreground = new SolidColorBrush(Colors.Black);
@@ -235,7 +237,7 @@ namespace ScavengerHunt
 
             //Location on Screen
             Canvas.SetTop(dynamicText2, 22d);
-            Canvas.SetLeft(dynamicText2, 478d);
+            Canvas.SetLeft(dynamicText2, 496d);
 
             //Add to Screen
             newCanvas.Children.Add(dynamicText2);
@@ -248,7 +250,7 @@ namespace ScavengerHunt
 
             //Properties of TextBlock
             dynamicBlock.Text = "Answer " + num + " Image Path";
-            dynamicBlock.Width = 330;
+            dynamicBlock.Width = 312;
             dynamicBlock.Height = 32;
             dynamicBlock.FontSize = 16;
             dynamicBlock.Foreground = new SolidColorBrush(Colors.DarkGray);
@@ -270,7 +272,7 @@ namespace ScavengerHunt
 
             //Location on Screen (Same as dynamicText2)
             Canvas.SetTop(dynamicBlock, 22d);
-            Canvas.SetLeft(dynamicBlock, 478d);
+            Canvas.SetLeft(dynamicBlock, 496d);
 
             //Add to screen
             newCanvas.Children.Add(dynamicBlock);
@@ -296,7 +298,23 @@ namespace ScavengerHunt
             newCanvas.Children.Add(newBtn);
             btnList.Add(newBtn);
 
+            var delBtn = new Button();
+
+
+
+            //Properties of button
+            delBtn.Style = (Style)this.Resources["deleteButton"];
             
+
+            //Location on Screen
+            Canvas.SetTop(delBtn, 30d);
+            Canvas.SetLeft(delBtn, 16d);
+
+            delBtn.Click += deleteRow;
+
+            //Add to Screen
+            newCanvas.Children.Add(delBtn);
+            delList.Add(delBtn);
         }
 
         private void Size_Changed(object sender, SizeChangedEventArgs e)
@@ -339,12 +357,28 @@ namespace ScavengerHunt
             for (int i = 0; i < btnList.Count(); i++)
             {
                 string s = imgList[i];
-                if (s == null)
+                if (s == null || invalList[i].Opacity == 100)
                 {
                     return false;
                 } 
             }
             return true;
+        }
+
+        private void deleteRow(object sender, RoutedEventArgs e)
+        {
+            var index = delList.IndexOf((Button)sender);
+            delList.RemoveAt(index);
+            btnList.RemoveAt(index);
+            btnList.RemoveAt(index);
+            imgList.RemoveAt(index);
+            imgList.RemoveAt(index);
+            lblList.RemoveAt(index);
+            lblList.RemoveAt(index);
+            invalList.RemoveAt(index);
+            invalList.RemoveAt(index);
+            stack.Children.RemoveAt(index);
+            
         }
 
         private void changeSize()
@@ -375,7 +409,7 @@ namespace ScavengerHunt
             for (i = 0; i < btnList.Count() ; i ++)
             {
                 string s = imgList[i];
-                if (s != null)
+                if (s != null )
                 {
                     if (i %2 == 0)
                     {
