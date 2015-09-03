@@ -30,7 +30,7 @@ namespace ScavengerHunt
         public MainWindow()
         {
             InitializeComponent();
-           
+            CenterWindowOnScreen();
             Application.Current.Resources["Color400"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF7043"));
             Application.Current.Resources["Color500"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF5722"));
             Application.Current.Resources["Color600"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F4511E"));
@@ -40,24 +40,36 @@ namespace ScavengerHunt
             Application.Current.Resources["ColorA700"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1976D2"));
         }
 
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            this.Left = (screenWidth / 2) - (windowWidth / 2);
+            this.Top = (screenHeight / 2) - (windowHeight / 2);
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            changeSize();
             btnList = new List<Button>();
             imgList = new List<string>();
             lblList = new List<TextBox>();
+            changeSize();
+            add();
+            add();
+            
         }
 
-   
+
         private void openFile(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine(btnList.IndexOf((Button)sender));
 
 
             var dlg = new Microsoft.Win32.OpenFileDialog();
 
             dlg.DefaultExt = ".png";
-            dlg.Filter = "PNG Files (*.png)|*.png|JPEG Filles (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            dlg.Filter = "Image Files(*.png, *.gif, *.jpg, *.jpeg) | *.png; *.gif; *.jpg; *.jpeg | PNG Files (*.png)|*.png|JPEG Filles (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
 
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -68,147 +80,93 @@ namespace ScavengerHunt
                 lblList[btnList.IndexOf((Button)sender)].Text = filename;
                 lblList[btnList.IndexOf((Button)sender)].Focus();
             }
+            
+            if (checkValid())
+            {
+                makeButton.IsEnabled = true;
+            }
+            else
+            {
+                makeButton.IsEnabled = false;
+            }
 
+        }
+
+
+
+    
+
+        private void addRow(object sender, RoutedEventArgs e)
+        {
+            add();
+            
 
 
         }
 
-        private void addRow(object sender, RoutedEventArgs e)
+        private void add()
         {
             //increase number of rows
             num++;
             imgList.Add(null);
             imgList.Add(null);
-           
+
             var newCanvas = new Canvas();
             newCanvas.Width = 940;
-            newCanvas.Height = 72;
+            newCanvas.Height = 80;
             stack.Children.Add(newCanvas);
 
+            var invalidLabel = new Label();
 
-            //create button dynamically
-            var newBtn1 = new Button();
+            invalidLabel.Width = 330;
+            invalidLabel.Height = 24;
+            invalidLabel.FontSize = 12;
+            invalidLabel.Content = "Invalid Path";
+            invalidLabel.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF0000"));
+            invalidLabel.FontWeight = FontWeights.Bold;
 
-            //Text on button
-            newBtn1.Content = "OPEN FILE";
+            Canvas.SetTop(invalidLabel, 2d);
+            Canvas.SetLeft(invalidLabel, 12d);
+            newCanvas.Children.Add(invalidLabel);
 
-            //Properties of button
-            newBtn1.Width = 100;
-            newBtn1.Height = 36;
-            newBtn1.Style = (Style)this.Resources["MaterialAccentButton"];
-            
+            var invalidLabel2 = new Label();
 
-            //Location on Screen
-            Canvas.SetTop(newBtn1, 18d);
-            Canvas.SetLeft(newBtn1, 202d);
+            invalidLabel2.Width = 330;
+            invalidLabel2.Height = 24;
+            invalidLabel2.FontSize = 12;
+            invalidLabel2.Content = "Invalid Path";
+            invalidLabel2.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF0000"));
+            invalidLabel2.FontWeight = FontWeights.Bold;
 
-            newBtn1.Click += openFile;
+            Canvas.SetTop(invalidLabel2, 2d);
+            Canvas.SetLeft(invalidLabel2, 474d);
+            newCanvas.Children.Add(invalidLabel2);
 
-            //Add to Screen
-            newCanvas.Children.Add(newBtn1);
-            btnList.Add(newBtn1);
-
-            var newBtn = new Button();
-
-            //Text on button
-            newBtn.Content = "OPEN FILE";
-
-            //Properties of button
-            newBtn.Width = 100;
-            newBtn.Height = 36;
-            newBtn.Style = (Style)this.Resources["MaterialAccentButton"];
-
-
-            //Location on Screen
-            Canvas.SetTop(newBtn, 18d);
-            Canvas.SetLeft(newBtn, 504d);
-
-            newBtn.Click += openFile;
-
-            //Add to Screen
-            newCanvas.Children.Add(newBtn);
-            btnList.Add(newBtn);
 
             //create Label dynamically
             var dynamicText = new TextBox();
 
             //Properties of label
-            dynamicText.Width = 170;
+            dynamicText.Width = 330;
             dynamicText.Height = 32;
             dynamicText.FontSize = 16;
             dynamicText.Foreground = new SolidColorBrush(Colors.Black);
             dynamicText.TextChanged += textChanged;
 
             //Location on Screen
-            Canvas.SetTop(dynamicText, 18d);
+            Canvas.SetTop(dynamicText, 22d);
             Canvas.SetLeft(dynamicText, 16d);
 
             //Add to Screen
             newCanvas.Children.Add(dynamicText);
-           
             lblList.Add(dynamicText);
-
-            //create Label dynamically
-            var dynamicText2 = new TextBox();
-
-            //Text on Label
-            
-
-            //Properties of label
-            dynamicText2.Width = 170;
-            dynamicText2.Height = 32;
-            dynamicText2.FontSize = 16;
-            dynamicText2.Foreground = new SolidColorBrush(Colors.Black);
-            dynamicText2.TextChanged += textChanged;
-
-            //Location on Screen
-            Canvas.SetTop(dynamicText2, 18d);
-            Canvas.SetLeft(dynamicText2, 318d);
-
-            //Add to Screen
-            newCanvas.Children.Add(dynamicText2);
-            lblList.Add(dynamicText2);
-
-            //Create Watermarks for textBoxes
-
-            //create TextBlock Dynamically
-            var dynamicBlock = new TextBlock();
-
-            //Properties of TextBlock
-            dynamicBlock.Text = "Answer " + num + " Image Path";
-            dynamicBlock.Width = 170;
-            dynamicBlock.Height = 32;
-            dynamicBlock.FontSize = 16;
-            dynamicBlock.Foreground = new SolidColorBrush(Colors.DarkGray);
-            dynamicBlock.IsHitTestVisible = false;
-
-            //Create Watermark Style
-            Style style = new Style(typeof(TextBlock));
-            style.Setters.Add(new Setter(TextBlock.VisibilityProperty, Visibility.Collapsed));
-
-            //The trigger to make it visible
-            var trigger = new DataTrigger();
-            trigger.Binding = new Binding("Text") { Source = dynamicText2 };
-            trigger.Value = "";
-            trigger.Setters.Add(new Setter(TextBlock.VisibilityProperty, Visibility.Visible));
-            style.Triggers.Add(trigger);
-
-            //Set the style
-            dynamicBlock.Style = style;
-
-            //Location on Screen (Same as dynamicText2)
-            Canvas.SetTop(dynamicBlock, 18d);
-            Canvas.SetLeft(dynamicBlock, 318d);
-
-            //Add to screen
-            newCanvas.Children.Add(dynamicBlock);
 
             //create TextBlock Dynamically
             var dynamicBlock2 = new TextBlock();
 
             //Properties of TextBlock
             dynamicBlock2.Text = "Question " + num + " Image Path";
-            dynamicBlock2.Width = 170;
+            dynamicBlock2.Width = 330;
             dynamicBlock2.Height = 32;
             dynamicBlock2.FontSize = 16;
             dynamicBlock2.Foreground = new SolidColorBrush(Colors.DarkGray);
@@ -229,13 +187,110 @@ namespace ScavengerHunt
             dynamicBlock2.Style = style2;
 
             //Location on Screen (Same as dynamicText)
-            Canvas.SetTop(dynamicBlock2, 18d);
+            Canvas.SetTop(dynamicBlock2, 22d);
             Canvas.SetLeft(dynamicBlock2, 16d);
 
             //Add to Screen
             newCanvas.Children.Add(dynamicBlock2);
 
+            //create button dynamically
+            var newBtn1 = new Button();
 
+            //Text on button
+            newBtn1.Content = "OPEN FILE";
+
+            //Properties of button
+            newBtn1.Width = 100;
+            newBtn1.Height = 36;
+            newBtn1.Style = (Style)this.Resources["MaterialAccentButton"];
+
+            
+
+
+            //Location on Screen
+            Canvas.SetTop(newBtn1, 22d);
+            Canvas.SetLeft(newBtn1, 362d);
+
+            newBtn1.Click += openFile;
+
+            //Add to Screen
+            newCanvas.Children.Add(newBtn1);
+            btnList.Add(newBtn1);
+
+            //create Label dynamically
+            var dynamicText2 = new TextBox();
+
+            //Properties of label
+            dynamicText2.Width = 330;
+            dynamicText2.Height = 32;
+            dynamicText2.FontSize = 16;
+            dynamicText2.Foreground = new SolidColorBrush(Colors.Black);
+            dynamicText2.TextChanged += textChanged;
+
+            //Location on Screen
+            Canvas.SetTop(dynamicText2, 22d);
+            Canvas.SetLeft(dynamicText2, 478d);
+
+            //Add to Screen
+            newCanvas.Children.Add(dynamicText2);
+            lblList.Add(dynamicText2);
+
+            //Create Watermarks for textBoxes
+
+            //create TextBlock Dynamically
+            var dynamicBlock = new TextBlock();
+
+            //Properties of TextBlock
+            dynamicBlock.Text = "Answer " + num + " Image Path";
+            dynamicBlock.Width = 330;
+            dynamicBlock.Height = 32;
+            dynamicBlock.FontSize = 16;
+            dynamicBlock.Foreground = new SolidColorBrush(Colors.DarkGray);
+            dynamicBlock.IsHitTestVisible = false;
+
+            //Create Watermark Style
+            Style style = new Style(typeof(TextBlock));
+            style.Setters.Add(new Setter(TextBlock.VisibilityProperty, Visibility.Collapsed));
+
+            //The trigger to make it visible
+            var trigger = new DataTrigger();
+            trigger.Binding = new Binding("Text") { Source = dynamicText2 };
+            trigger.Value = "";
+            trigger.Setters.Add(new Setter(TextBlock.VisibilityProperty, Visibility.Visible));
+            style.Triggers.Add(trigger);
+
+            //Set the style
+            dynamicBlock.Style = style;
+
+            //Location on Screen (Same as dynamicText2)
+            Canvas.SetTop(dynamicBlock, 22d);
+            Canvas.SetLeft(dynamicBlock, 478d);
+
+            //Add to screen
+            newCanvas.Children.Add(dynamicBlock);
+
+            var newBtn = new Button();
+
+            //Text on button
+            newBtn.Content = "OPEN FILE";
+
+            //Properties of button
+            newBtn.Width = 100;
+            newBtn.Height = 36;
+            newBtn.Style = (Style)this.Resources["MaterialAccentButton"];
+
+
+            //Location on Screen
+            Canvas.SetTop(newBtn, 22d);
+            Canvas.SetLeft(newBtn, 824d);
+
+            newBtn.Click += openFile;
+
+            //Add to Screen
+            newCanvas.Children.Add(newBtn);
+            btnList.Add(newBtn);
+
+            
         }
 
         private void Size_Changed(object sender, SizeChangedEventArgs e)
@@ -248,7 +303,37 @@ namespace ScavengerHunt
         {
             var t = (TextBox)sender;
             imgList[lblList.IndexOf(t)] = t.Text;
+            if (checkValid())
+            {
+                makeButton.IsEnabled = true;
+            } else
+            {
+                makeButton.IsEnabled = false;
+            }
 
+        }
+
+        private bool checkValid()
+        {
+            for (int i = 0; i < btnList.Count(); i++)
+            {
+                string s = imgList[i];
+                if (s == null)
+                {
+                    return false;
+                } else
+                {
+                    try
+                    {
+                        iTextSharp.text.Image.GetInstance(s);
+
+                    } catch
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         private void changeSize()
@@ -284,23 +369,33 @@ namespace ScavengerHunt
                     if (i %2 == 0)
                     {
                         questions[i/2] = iTextSharp.text.Image.GetInstance(s);
-                        Trace.WriteLine("Question: " + s);
                     } else
                     {
                         answers[i/2] = iTextSharp.text.Image.GetInstance(s);
-                        Trace.WriteLine("Answer: " + s);
                     }
                     
                     
                 } else
                 {
-                    Trace.WriteLine("NOT READY");
                     break;
                 }
             }
             if (i == btnList.Count())
             {
-                Scavenger pdf = new Scavenger(questions, answers);
+                var dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.AddExtension = true;
+                dlg.DefaultExt = ".pdf";
+
+                dlg.Filter = "PDF Files (*.pdf) | *.pdf";
+                Nullable<bool> result = dlg.ShowDialog();
+
+
+                if (result == true)
+                {
+                    string filename = dlg.FileName;
+                    Scavenger pdf = new Scavenger(questions, answers, filename);
+                }
+                
             }
         }
         

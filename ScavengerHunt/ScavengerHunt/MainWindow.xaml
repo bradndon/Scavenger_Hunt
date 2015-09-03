@@ -97,6 +97,55 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="MaterialFlatButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#00000000"/>
+            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Roboto"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,7"/>
+            
+
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+
+                        <Border Name="border" 
+                    Padding="{TemplateBinding Padding}" 
+                    Background="{TemplateBinding Background}"
+                    >
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <!--TODO: Set the right colors-->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!--<Setter TargetName="border" Property="BorderBrush" Value="#FFC6C6C4" />-->
+                                <Setter Property="Background" Value="#0ECCCCCC" />
+
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#19CCCCCC" />
+
+                                
+                                <!--Some setters here-->
+
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="FloatingActionButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="{DynamicResource ColorA500}"/>
             <Setter Property="Effect">
@@ -150,18 +199,18 @@
 
             </StackPanel>
         </ScrollViewer>
-        <StackPanel x:Name="menu" Height="645" Canvas.Top="78" Width="320" Background="#FF272424">
+        <StackPanel x:Name="menu" Height="645" Canvas.Top="78" Width="320" Background="#FF272424" >
             <StackPanel.Effect>
                 <DropShadowEffect Direction="0" ShadowDepth="2" Opacity="0.5"/>
             </StackPanel.Effect>
-            <Button x:Name="makeButton" Content="Button" Click="makeButton_Click"/>
+            <Button x:Name="makeButton" Content="Make Scavenger Hunt" Click="makeButton_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="320" IsEnabled="False" Margin="0" HorizontalContentAlignment="Left" Padding="8,7,24,7"/>
 
         </StackPanel>
 
         <Rectangle x:Name="appBar1" Height="25" Fill="{DynamicResource Color700}" Canvas.Top="0" Margin="0,0,0,0" Panel.ZIndex="-3"/>
         <Rectangle x:Name="appBar2" Height="64" Fill="{DynamicResource Color400}" Width="1270" Canvas.Top="15">
             <Rectangle.Effect>
-                <DropShadowEffect Direction="270" ShadowDepth="2" Opacity="0.5"/>
+                <DropShadowEffect Direction="270" ShadowDepth="2" Opacity="0.5" />
             </Rectangle.Effect>
         </Rectangle>
         <Button x:Name="openButton" Content="+" HorizontalAlignment="Left" Height="64" VerticalAlignment="Top" Width="64" Click="addRow" Canvas.Left="1165" Canvas.Top="585" RenderTransformOrigin="0.217,0.326" Style="{StaticResource FloatingActionButton}" FontSize="26.667" FontWeight="Bold" Foreground="White" FontFamily="Cambria Math" />

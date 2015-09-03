@@ -6,35 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Diagnostics;
 
 namespace ScavengerHunt
 {
     public class Scavenger
     {
-        public Scavenger(Image[] questions, Image[] answers)
+        public Scavenger(Image[] questions, Image[] answers, string filename)
         {
-            Make(questions, answers);
+            Make(questions, answers, filename);
         }
 
-        static void Make(Image[] questions, Image[] answers)
+        static void Make(Image[] questions, Image[] answers,  string filename)
         {
             //VARIABLE DEFINITIONS
             var doc = new Document(PageSize.LETTER.Rotate());
-            var writer = PdfWriter.GetInstance(doc, new FileStream("E:/foxb4/Documents/Doc1.pdf", FileMode.Create));
+            var writer = PdfWriter.GetInstance(doc, new FileStream(filename, FileMode.Create));
             Image ansImg, queImg; //ansImg top right, queImg bottom center
             string[] alpha = new string[26] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-            //Image[] questions = new Image[26]; //image array for questions
-            //Image[] answers = new Image[26]; //image array for answers
-
-            //find all the images
-            //for (int i = 1; i <= 26; i++)
-            //{
-            //    questions[i - 1] = Image.GetInstance("E:/Downloads/" + i + ".jpg");
-            //    answers[i - 1] = Image.GetInstance("E:/Downloads/" + i + ".jpg");
-            //}
-
-            //shuffle alphabet array
-            new Random().Shuffle(alpha);
+            //create an array of so that it will only use parts of the alphabet that correspond to the number of questions
+            int[] nums = Enumerable.Range(0,answers.Length).ToArray();
+            new Random().Shuffle(nums);
 
             //open document
             doc.Open();
@@ -53,7 +45,7 @@ namespace ScavengerHunt
                 cb.Stroke();
 
                 //formatting for letter
-                var myText = new Phrase(alpha[i]);
+                var myText = new Phrase(alpha[nums[i]]);
                 myText.Font.Size = 108f;
                 var ct = new ColumnText(cb);
                 ct.SetSimpleColumn(myText, 36f, doc.PageSize.Height - 36f - 100f, 277, 200, 32, Element.ALIGN_CENTER);
@@ -70,11 +62,11 @@ namespace ScavengerHunt
                 queImg.ScaleToFit(720f, 302f);
                 queImg.SetAbsolutePosition(36f, 36f + 151f - queImg.ScaledHeight / 2);
                 doc.Add(queImg);
-                order.Append(alpha[i] + " -> ");
+                order.Append(alpha[nums[i]] + " -> ");
                 
                 
             }
-            order.Append(alpha[0]);
+            order.Append(alpha[nums[0]]);
             doc.NewPage();
             string o = order.ToString();
             var orders = new Paragraph(o);
@@ -88,7 +80,7 @@ namespace ScavengerHunt
             doc.Close();
 
             //open finished document
-            System.Diagnostics.Process.Start("E:/foxb4/Documents/Doc1.pdf");
+            System.Diagnostics.Process.Start(filename);
         }
     }
     //extension for shuffling an array (based on the Fisher-Yates Algorithm)
