@@ -26,6 +26,7 @@ namespace ScavengerHunt
         List<string> imgList;
         List<Button> btnList;
         List<TextBox> lblList;
+        List<Label> invalList;
         int num = 0;
         public MainWindow()
         {
@@ -55,6 +56,7 @@ namespace ScavengerHunt
             btnList = new List<Button>();
             imgList = new List<string>();
             lblList = new List<TextBox>();
+            invalList = new List<Label>();
             changeSize();
             add();
             add();
@@ -124,6 +126,7 @@ namespace ScavengerHunt
             invalidLabel.Content = "Invalid Path";
             invalidLabel.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF0000"));
             invalidLabel.FontWeight = FontWeights.Bold;
+            invalidLabel.Opacity = 0;
 
             Canvas.SetTop(invalidLabel, 2d);
             Canvas.SetLeft(invalidLabel, 12d);
@@ -137,12 +140,15 @@ namespace ScavengerHunt
             invalidLabel2.Content = "Invalid Path";
             invalidLabel2.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF0000"));
             invalidLabel2.FontWeight = FontWeights.Bold;
+            invalidLabel2.Opacity = 0;
 
             Canvas.SetTop(invalidLabel2, 2d);
             Canvas.SetLeft(invalidLabel2, 474d);
             newCanvas.Children.Add(invalidLabel2);
 
-
+            invalList.Add(invalidLabel);
+            invalList.Add(invalidLabel2);
+            
             //create Label dynamically
             var dynamicText = new TextBox();
 
@@ -303,6 +309,21 @@ namespace ScavengerHunt
         {
             var t = (TextBox)sender;
             imgList[lblList.IndexOf(t)] = t.Text;
+            try
+            {
+                if (t.Text == "")
+                {
+                    invalList[lblList.IndexOf(t)].Opacity = 0;
+                } else {
+                    iTextSharp.text.Image.GetInstance(t.Text);
+                    invalList[lblList.IndexOf(t)].Opacity = 0;
+                }
+
+            }
+            catch
+            {
+                invalList[lblList.IndexOf(t)].Opacity = 100;
+            }
             if (checkValid())
             {
                 makeButton.IsEnabled = true;
@@ -321,17 +342,7 @@ namespace ScavengerHunt
                 if (s == null)
                 {
                     return false;
-                } else
-                {
-                    try
-                    {
-                        iTextSharp.text.Image.GetInstance(s);
-
-                    } catch
-                    {
-                        return false;
-                    }
-                }
+                } 
             }
             return true;
         }
