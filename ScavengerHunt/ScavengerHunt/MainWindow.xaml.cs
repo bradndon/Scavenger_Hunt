@@ -81,7 +81,7 @@ namespace ScavengerHunt
             {
                 string filename = dlg.FileName;
                 imgList[btnList.IndexOf((Button)sender)] = filename;
-                lblList[btnList.IndexOf((Button)sender)].Text = filename;
+                lblList[btnList.IndexOf((Button)sender)].Text = filename; 
                 lblList[btnList.IndexOf((Button)sender)].Focus();
             }
             
@@ -369,14 +369,14 @@ namespace ScavengerHunt
         {
             var index = delList.IndexOf((Button)sender);
             delList.RemoveAt(index);
-            btnList.RemoveAt(index);
-            btnList.RemoveAt(index);
-            imgList.RemoveAt(index);
-            imgList.RemoveAt(index);
-            lblList.RemoveAt(index);
-            lblList.RemoveAt(index);
-            invalList.RemoveAt(index);
-            invalList.RemoveAt(index);
+            btnList.RemoveAt(2*index);
+            btnList.RemoveAt(2*index);
+            imgList.RemoveAt(2*index);
+            imgList.RemoveAt(2*index);
+            lblList.RemoveAt(2*index);
+            lblList.RemoveAt(2*index);
+            invalList.RemoveAt(2*index);
+            invalList.RemoveAt(2*index);
             stack.Children.RemoveAt(index);
             
         }

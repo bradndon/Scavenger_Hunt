@@ -9,7 +9,8 @@
         Loaded="Window_Loaded" SizeChanged="Size_Changed">
 
     <Window.Resources>
-
+        <Color x:Key="Color500Test">#FF000000</Color>
+        <SolidColorBrush x:Key="Boop" Color="{StaticResource Color500Test}"/>
 
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="CaretBrush" Value="{DynamicResource Color500}"/>
@@ -31,8 +32,26 @@
                             </Trigger>
 
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Color500}"/>
-                                <Setter Property="BorderThickness" TargetName="border" Value="0 0 0 2"/>
+                                <!--<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Color500}"/>-->
+                                <!--<Setter Property="BorderThickness" TargetName="border" Value="0 0 0 2"/>-->
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:0.150" To="#FFFF5722" Storyboard.TargetProperty="BorderBrush.Color" Storyboard.TargetName="border"/>
+                                            <ThicknessAnimation Duration="0:0:0.150" To="0 0 0 2" Storyboard.TargetName="border" Storyboard.TargetProperty="BorderThickness"/>
+                                            <!--<DoubleAnimation Duration="0:0:0.150" To="70" Storyboard.TargetProperty="Width" />-->
+
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ThicknessAnimation Duration="0:0:0.150" To="0 0 0 1" Storyboard.TargetName="border" Storyboard.TargetProperty="BorderThickness"/>
+                                            <ColorAnimation Duration="0:0:0.150" To="LightGray" Storyboard.TargetProperty="BorderBrush.Color" Storyboard.TargetName="border"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
                             </Trigger>
 
                         </ControlTemplate.Triggers>

@@ -60,7 +60,7 @@ namespace ScavengerHunt
                 //format image for bottom middle
                 queImg = questions[((i + 1) % answers.Length)];
                 queImg.ScaleToFit(720f, 302f);
-                queImg.SetAbsolutePosition(36f, 36f + 151f - queImg.ScaledHeight / 2);
+                queImg.SetAbsolutePosition(36f + 360f- queImg.ScaledWidth / 2, 36f + 151f - queImg.ScaledHeight / 2);
                 doc.Add(queImg);
                 order.Append(alpha[nums[i]] + " -> ");
                 
