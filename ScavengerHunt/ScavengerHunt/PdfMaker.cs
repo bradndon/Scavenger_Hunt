@@ -54,7 +54,7 @@ namespace ScavengerHunt
                 //format image for top right
                 ansImg = answers[i];
                 ansImg.ScaleToFit(240f, 200f);
-                ansImg.SetAbsolutePosition(doc.PageSize.Width - 36f - 240f, doc.PageSize.Height - 36f - 100f - ansImg.ScaledHeight / 2);
+                ansImg.SetAbsolutePosition(doc.PageSize.Width - 36f - 120f - ansImg.ScaledWidth / 2, doc.PageSize.Height - 36f - 100f - ansImg.ScaledHeight / 2);
                 doc.Add(ansImg);
 
                 //format image for bottom middle

@@ -292,8 +292,15 @@
             <StackPanel.Effect>
                 <DropShadowEffect Direction="0" ShadowDepth="2" Opacity="0.5"/>
             </StackPanel.Effect>
-            <Button x:Name="makeButton" Content="Make Scavenger Hunt" Click="makeButton_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="320" IsEnabled="False" Margin="0" HorizontalContentAlignment="Left" Padding="8,7,24,7"/>
-            
+            <Canvas Height="47">
+                <Button x:Name="makeButton" Content="Make Scavenger Hunt" Click="makeButton_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="270" IsEnabled="False" Margin="0" HorizontalContentAlignment="Left" Padding="8,7,24,7"/>
+
+                <Button x:Name="makeButton2"  Click="options_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="50" Margin="0" HorizontalContentAlignment="Left" Canvas.Left="270">
+                     <Image x:Name="img" Source="family-32.jpg"></Image>
+                </Button>
+
+            </Canvas>
+
         </StackPanel>
 
         <Rectangle x:Name="appBar1" Height="25" Fill="{DynamicResource Color700}" Canvas.Top="0" Margin="0,0,0,0" Panel.ZIndex="-3"/>

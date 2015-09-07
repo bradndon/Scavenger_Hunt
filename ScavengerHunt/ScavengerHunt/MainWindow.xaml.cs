@@ -23,6 +23,7 @@ namespace ScavengerHunt
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool options = false;
         List<string> imgList;
         List<Button> btnList;
         List<Button> delList;
@@ -443,6 +444,20 @@ namespace ScavengerHunt
                 
             }
         }
-        
+
+        private void options_Click(object sender, RoutedEventArgs e)
+        {
+            if (options)
+            {
+                var rotate = new RotateTransform(0d);
+                img.RenderTransform = rotate;
+            }
+            else
+            {
+                var rotate = new RotateTransform(90d);
+                img.RenderTransform = rotate;
+            }
+            options = !options;
+        }
     }
 }
