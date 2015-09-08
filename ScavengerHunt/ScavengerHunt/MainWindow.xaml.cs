@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
@@ -23,7 +24,7 @@ namespace ScavengerHunt
     /// </summary>
     public partial class MainWindow : Window
     {
-        bool options = false;
+        bool options = true;
         List<string> imgList;
         List<Button> btnList;
         List<Button> delList;
@@ -449,13 +450,37 @@ namespace ScavengerHunt
         {
             if (options)
             {
-                var rotate = new RotateTransform(0d);
+                var da = new DoubleAnimation(90, 0, new Duration(TimeSpan.FromMilliseconds(150)));
+                var da2 = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromMilliseconds(250)));
+                da2.Completed += (s,ef) =>
+                {
+
+                    
+                    makeButton3.Visibility = Visibility.Collapsed;
+                    makeButton4.Visibility = Visibility.Collapsed;
+                };
+                var rotate = new RotateTransform();
                 img.RenderTransform = rotate;
+                makeButton4.BeginAnimation(UIElement.OpacityProperty, da2);
+                makeButton3.BeginAnimation(UIElement.OpacityProperty, da2);
+                
+                rotate.BeginAnimation(RotateTransform.AngleProperty, da);
+                
             }
             else
             {
-                var rotate = new RotateTransform(90d);
+                var da = new DoubleAnimation(0, 90, new Duration(TimeSpan.FromMilliseconds(150)));
+                var da2 = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromMilliseconds(250)));
+
+
+                var rotate = new RotateTransform();
                 img.RenderTransform = rotate;
+                rotate.BeginAnimation(RotateTransform.AngleProperty, da);
+                makeButton4.Visibility = Visibility.Visible;
+                makeButton3.Visibility = Visibility.Visible;
+
+                makeButton4.BeginAnimation(UIElement.OpacityProperty, da2);
+                makeButton3.BeginAnimation(UIElement.OpacityProperty, da2);
             }
             options = !options;
         }

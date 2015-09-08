@@ -119,7 +119,7 @@
         <Style x:Key="MaterialFlatButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#00000000"/>
             <Setter Property="Foreground" Value="#FFFFFFFF"/>
-            
+
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontFamily" Value="Roboto"/>
@@ -215,7 +215,7 @@
             <Setter Property="Foreground" Value="#FFFFFFFF"/>
             <Setter Property="Height" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="FontFamily" Value="Roboto"/>
             <Setter Property="Width" Value="20"/>
             <Setter Property="Content" Value="-"/>
             <Setter Property="Effect">
@@ -239,15 +239,15 @@
                             <!--TODO: Set the right colors-->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <!--<Setter TargetName="border" Property="BorderBrush" Value="#FFC6C6C4" />-->
-                                
+
                                 <Setter Property="Background" Value="#FFFF1A1A" />
                                 <Setter Property="Content" Value="DELETE"/>
 
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
-                                             <DoubleAnimation Duration="0:0:0.150" To="70" Storyboard.TargetProperty="Width" />
-                                            
+                                            <DoubleAnimation Duration="0:0:0.150" To="70" Storyboard.TargetProperty="Width" />
+
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -293,13 +293,25 @@
                 <DropShadowEffect Direction="0" ShadowDepth="2" Opacity="0.5"/>
             </StackPanel.Effect>
             <Canvas Height="47">
-                <Button x:Name="makeButton" Content="Make Scavenger Hunt" Click="makeButton_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="270" IsEnabled="False" Margin="0" HorizontalContentAlignment="Left" Padding="8,7,24,7"/>
-
+                <Button x:Name="makeButton" Content="Make Scavenger Hunt" Click="makeButton_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="270" IsEnabled="False" Margin="0" HorizontalContentAlignment="Left" Padding="16,7,24,7"/>
                 <Button x:Name="makeButton2"  Click="options_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="50" Margin="0" HorizontalContentAlignment="Left" Canvas.Left="270">
-                     <Image x:Name="img" Source="family-32.jpg"></Image>
-                </Button>
+                    <Image x:Name="img" Source="arrow.png" RenderTransformOrigin="0.5,0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
 
+                    </Image>
+                </Button>
             </Canvas>
+            <Button x:Name="makeButton4" Content="Test1" Click="makeButton_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="320"  Margin="0" HorizontalContentAlignment="Left" Padding="32,7,24,7"/>
+            <CheckBox x:Name="makeButton3" Content="CheckBox" Height="48" Width="320" FontSize="14" FontFamily="Roboto" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"  Padding="8,-1,32,24"/>
+            
+            <Button x:Name="makeButton_Copy" Content="Make Scavenger Hunt" Click="makeButton_Click" Style="{DynamicResource MaterialFlatButton}" HorizontalAlignment="Left" Height="48" Width="270" IsEnabled="False" Margin="0" HorizontalContentAlignment="Left" Padding="16,7,24,7"/>
 
         </StackPanel>
 
