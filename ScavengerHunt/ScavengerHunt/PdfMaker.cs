@@ -14,10 +14,15 @@ namespace ScavengerHunt
     {
         public Scavenger(Image[] questions, Image[] answers, string filename)
         {
-            Make(questions, answers, filename);
+            Make(questions, answers, filename, true, true);
         }
 
-        static void Make(Image[] questions, Image[] answers,  string filename)
+        public Scavenger(Image[] questions, Image[] answers, string filename, bool borders, bool opCreate)
+        {
+            Make(questions, answers, filename, borders, opCreate);
+        }
+
+        static void Make(Image[] questions, Image[] answers,  string filename, bool borders, bool opCreate)
         {
             //VARIABLE DEFINITIONS
             var doc = new Document(PageSize.LETTER.Rotate());
@@ -38,11 +43,14 @@ namespace ScavengerHunt
                 //add a new page
                 doc.NewPage();
 
-                //boxes for refrence REMOVE FOR RELEASE
-                cb.Rectangle(doc.PageSize.Width - 36f - 240f, doc.PageSize.Height - 36f - 200f, 240f, 200f);
-                cb.Rectangle(36f, doc.PageSize.Height - 36f - 200f, 240f, 200f);
-                cb.Rectangle(36f, 36f, 720f, 302f);
-                cb.Stroke();
+                //boxes for refrence
+                if (borders)
+                {
+                    cb.Rectangle(doc.PageSize.Width - 36f - 240f, doc.PageSize.Height - 36f - 200f, 240f, 200f);
+                    cb.Rectangle(36f, doc.PageSize.Height - 36f - 200f, 240f, 200f);
+                    cb.Rectangle(36f, 36f, 720f, 302f);
+                    cb.Stroke();
+                }
 
                 //formatting for letter
                 var myText = new Phrase(alpha[nums[i]]);
@@ -80,7 +88,10 @@ namespace ScavengerHunt
             doc.Close();
 
             //open finished document
-            System.Diagnostics.Process.Start(filename);
+            if (opCreate)
+            {
+                System.Diagnostics.Process.Start(filename);
+            }
         }
     }
     //extension for shuffling an array (based on the Fisher-Yates Algorithm)

@@ -24,13 +24,18 @@ namespace ScavengerHunt
     /// </summary>
     public partial class MainWindow : Window
     {
-        bool options = true;
+        bool options = false;
         List<string> imgList;
         List<Button> btnList;
         List<Button> delList;
         List<TextBox> lblList;
         List<Label> invalList;
+        Button[] opButtons;
+
         int num = 0;
+        bool borders = true;
+        bool opCreate = true;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -42,6 +47,11 @@ namespace ScavengerHunt
             Application.Current.Resources["ColorA500"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2196F3"));
             Application.Current.Resources["ColorA600"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1E88E5"));
             Application.Current.Resources["ColorA700"] = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1976D2"));
+            opButtons = new Button[] { borderOption, openOption };
+            foreach (Button b in opButtons)
+            {
+                b.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void CenterWindowOnScreen()
@@ -440,7 +450,7 @@ namespace ScavengerHunt
                 if (result == true)
                 {
                     string filename = dlg.FileName;
-                    Scavenger pdf = new Scavenger(questions, answers, filename);
+                    Scavenger pdf = new Scavenger(questions, answers, filename, borders, opCreate);
                 }
                 
             }
@@ -448,21 +458,27 @@ namespace ScavengerHunt
 
         private void options_Click(object sender, RoutedEventArgs e)
         {
+
             if (options)
             {
                 var da = new DoubleAnimation(90, 0, new Duration(TimeSpan.FromMilliseconds(150)));
-                var da2 = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromMilliseconds(250)));
+                var da2 = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromMilliseconds(150)));
                 da2.Completed += (s,ef) =>
                 {
-
+                    foreach(Button b in opButtons)
+                    {
+                        b.Visibility = Visibility.Collapsed;
+                    }
                     
-                    makeButton3.Visibility = Visibility.Collapsed;
-                    makeButton4.Visibility = Visibility.Collapsed;
+                
                 };
                 var rotate = new RotateTransform();
                 img.RenderTransform = rotate;
-                makeButton4.BeginAnimation(UIElement.OpacityProperty, da2);
-                makeButton3.BeginAnimation(UIElement.OpacityProperty, da2);
+                foreach (Button b in opButtons)
+                {
+                    b.BeginAnimation(UIElement.OpacityProperty, da2);
+                }
+                
                 
                 rotate.BeginAnimation(RotateTransform.AngleProperty, da);
                 
@@ -476,13 +492,41 @@ namespace ScavengerHunt
                 var rotate = new RotateTransform();
                 img.RenderTransform = rotate;
                 rotate.BeginAnimation(RotateTransform.AngleProperty, da);
-                makeButton4.Visibility = Visibility.Visible;
-                makeButton3.Visibility = Visibility.Visible;
 
-                makeButton4.BeginAnimation(UIElement.OpacityProperty, da2);
-                makeButton3.BeginAnimation(UIElement.OpacityProperty, da2);
+                foreach (Button b in opButtons)
+                {
+                    b.Visibility = Visibility.Visible;
+                    b.BeginAnimation(UIElement.OpacityProperty, da2);
+                }
             }
             options = !options;
+        }
+        
+        private void borders_Click(object sender, RoutedEventArgs e)
+        {
+            if (borders) {
+                img2.Source = new BitmapImage(new Uri(@"/uncheck.png", UriKind.RelativeOrAbsolute));
+            } else
+            {
+                img2.Source = new BitmapImage(new Uri(@"/check.png", UriKind.RelativeOrAbsolute));
+            }
+
+            borders = !borders;
+        }
+
+        private void opCreate_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if (opCreate)
+            {
+                openImage.Source = new BitmapImage(new Uri(@"/uncheck.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                openImage.Source = new BitmapImage(new Uri(@"/check.png", UriKind.RelativeOrAbsolute));
+            }
+
+            opCreate = !opCreate;
         }
     }
 }
